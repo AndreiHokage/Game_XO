@@ -1,0 +1,4 @@
+0;3;XO----X-O;X;In derulare
+2;4;OOXO--X--XX-O-X-;O;Terminat
+1;3;XX-O-OXO-;O;In derulare
+5;3;XOX-O-XXX;O;Terminat
