@@ -1,4 +1,8 @@
-0;3;XO----X-O;X;In derulare
-2;4;OOXO--X--XX-O-X-;O;Terminat
-1;3;XX-O-OXO-;O;In derulare
-5;3;XOX-O-XXX;O;Terminat
+0;3;XO----X-O;X;Playing
+2;4;OOXO--X--XX-O-X-;O;Finished
+1;3;XX-O-OXO-;O;Playing
+5;3;XOX-O-XXX;O;Finished
+10;5;X----X-----------O-------;O;Playing
+14;4;----------------;X;Started
+18;4;----------------;X;Started
+19;3;XO--X--OX;O;Finished

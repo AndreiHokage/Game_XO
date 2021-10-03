@@ -30,10 +30,10 @@ Game Game_Controller::update_game_after_play(Game& game, int index) {
 		else ch_space++;
 
 	if ((ch_space == 0 && ch_xo == game.get_dim() * game.get_dim()) || is_game_win(game.get_dim(), game.get_table()))
-		game.set_state("Terminat");
+		game.set_state("Finished");
 	else
 		if (ch_space && ch_xo < game.get_dim() * game.get_dim())
-			game.set_state("In derulare");
+			game.set_state("Playing");
 
 	Game prev_game=repo.update_game(game);
 	notify();

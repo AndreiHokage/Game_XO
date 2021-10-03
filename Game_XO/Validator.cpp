@@ -40,7 +40,7 @@ void Validator::validate(const Game& game) {
 }
 
 void Validator::start_validate(const Game& game) {
-	if (game.get_state() != "Neinceput")
+	if (game.get_state() != "Started")
 		throw GameError{ "For a new game,the status has to be Neinceput!\n" };
 	validate(game);
 }

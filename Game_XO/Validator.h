@@ -14,9 +14,9 @@ private:
 
 public:
 	Validator() {
-		enum_state.push_back("Neinceput");
-		enum_state.push_back("In derulare");
-		enum_state.push_back("Terminat");
+		enum_state.push_back("Started");
+		enum_state.push_back("Playing");
+		enum_state.push_back("Finished");
 	}
 
 	/*

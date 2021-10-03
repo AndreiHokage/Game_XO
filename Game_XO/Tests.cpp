@@ -63,7 +63,7 @@ void Tests::run_validate_game() {
 		assert(e.get_msg() == "For a new game,the status has to be Neinceput!\n");
 	}
 
-	oth_game.set_state("Neinceput");
+	oth_game.set_state("Started");
 	try {
 		vad.start_validate(oth_game);
 	}
@@ -130,15 +130,15 @@ void Tests::run_update_repo_game() {
 
 void Tests::run_add_controller() {
 	std::ofstream g(filename, std::ios::trunc);
-	g << "0;3;XXO---XXX;X;Neinceput\n";
-	g << "1;4;XXXXOOOOXXXXOOXX;O;Terminat\n";
+	g << "0;3;XXO---XXX;X;Started\n";
+	g << "1;4;XXXXOOOOXXXXOOXX;O;Finished\n";
 	g.close();
 
 	Validator vad{};
 	Game_Repo repo{ filename };
 	Game_Controller srv{ repo,vad };
 
-	srv.add_game(3, 3, "------XOX", "O", "Neinceput");
+	srv.add_game(3, 3, "------XOX", "O", "Started");
 	const vector < Game >& rez = srv.get_all();
 	assert(rez.size() == 3);
 	assert(rez[2].get_id() == 3);
@@ -146,15 +146,15 @@ void Tests::run_add_controller() {
 
 void Tests::run_update_controller() {
 	std::ofstream g(filename, std::ios::trunc);
-	g << "0;3;XXO---XXX;X;Neinceput\n";
-	g << "1;4;XXXXOOOOXXXXOOXX;O;Terminat\n";
+	g << "0;3;XXO---XXX;X;Started\n";
+	g << "1;4;XXXXOOOOXXXXOOXX;O;Finished\n";
 	g.close();
 
 	Validator vad{};
 	Game_Repo repo{ filename };
 	Game_Controller srv{ repo,vad };
 
-	srv.update_game(0, 3, "XXOX--XXX", "O", "In derulare");
+	srv.update_game(0, 3, "XXOX--XXX", "O", "Playing");
 	const vector < Game >& rez = srv.get_all();
 	assert(rez.size() == 2);
 	assert(rez[0].get_table() == "XXOX--XXX");
@@ -162,25 +162,25 @@ void Tests::run_update_controller() {
 
 void Tests::run_sorted_status() {
 	std::ofstream g(filename, std::ios::trunc);
-	g << "1;4;XXXXOOOOXXXXOOXX;O;Terminat\n";
-	g << "0;3;XXO---XXX;X;Neinceput\n";
-	g << "2;3;XXO---XXX;X;In derulare\n";
+	g << "1;4;XXXXOOOOXXXXOOXX;O;Finished\n";
+	g << "0;3;XXO---XXX;X;Started\n";
+	g << "2;3;XXO---XXX;X;Playing\n";
 	g.close();
 
 	Validator vad{};
 	Game_Repo repo{ filename };
 	Game_Controller srv{ repo,vad };
 	vector < Game > rez = srv.sorted_status();
-	assert(rez[0].get_id() == 2);
-	assert(rez[1].get_id() == 0);
-	assert(rez[2].get_id() == 1);
+	assert(rez[0].get_id() == 1);
+	assert(rez[1].get_id() == 2);
+	assert(rez[2].get_id() == 0);
 }
 
 void Tests::run_update_after_play() {
 	std::ofstream g(filename, std::ios::trunc);
-	g << "1;4;XXXXOOOOXXXXOOXX;O;Terminat\n";
-	g << "0;3;OOX---OXO;X;Neinceput\n";
-	g << "2;3;XXO---XOX;X;In derulare\n";
+	g << "1;4;XXXXOOOOXXXXOOXX;O;Finished\n";
+	g << "0;3;OOX---OXO;X;Started\n";
+	g << "2;3;XXO---XOX;X;Playing\n";
 	g.close();
 
 	Validator vad{};
@@ -188,19 +188,19 @@ void Tests::run_update_after_play() {
 	Game_Controller srv{ repo,vad };
 
 	const vector < Game >& rez = srv.get_all();
-	Game game = rez[1]; qDebug() << QString::fromStdString(game.get_table());
+	Game game = rez[1];
 	srv.update_game_after_play(game, 3);
 	assert(game.get_player() == "O");
 	
 	assert(game.get_table() == "OOXX--OXO");
-	assert(game.get_state() == "In derulare");
+	assert(game.get_state() == "Playing");
 
 	srv.update_game_after_play(game, 4);
 	srv.update_game_after_play(game, 5);
 
 	assert(game.get_player() == "O");
 	assert(game.get_table() == "OOXXOXOXO");
-	assert(game.get_state() == "Terminat");
+	assert(game.get_state() == "Finished");
 }
 
 void Tests::run_is_win_game() {
