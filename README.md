@@ -9,4 +9,4 @@ Make a C++ app which implements TicTacToe game.The app manages more games,a game
     2)Add a new game.
     3)The user can update  a game.
     4)When select a game from the table,the app creates the board of game with dim*dim cells.
-    5)The app allows to pay tictactoe game.
+    5)The app allows to play tictactoe game.
